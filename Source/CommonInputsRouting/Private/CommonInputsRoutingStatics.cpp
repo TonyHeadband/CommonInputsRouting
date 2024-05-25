@@ -11,7 +11,7 @@ UCommonInputsRoutingStatics::UCommonInputsRoutingStatics(const FObjectInitialize
 
 }
 
-void UCommonInputsRoutingStatics::CommonSetInputMode(APlayerController* PlayerController, bool bMouseVisible, bool bIgnoreLookInput, bool bIgnoreMoveInput)
+void UCommonInputsRoutingStatics::CommonSetInputMode(APlayerController* PlayerController, bool bCenterCursor, bool bMouseVisible, bool bIgnoreLookInput, bool bIgnoreMoveInput)
 {
 	// You must give us a valid PlayerController
 	if (!IsValid(PlayerController))
@@ -31,12 +31,14 @@ void UCommonInputsRoutingStatics::CommonSetInputMode(APlayerController* PlayerCo
 	// We only need the base action router, not our custom one, though none of this
 	// will work the way we want if this hasn't been overridden to use our custom
 	// action router subsystem.
-	UCommonUIActionRouterBase* ActionRouter = LocalPlayer->GetSubsystem<UCommonUIActionRouterBase>();
+	UCommonUIActionRouter* ActionRouter = LocalPlayer->GetSubsystem<UCommonUIActionRouter>();
 	if (!ActionRouter)
 	{
 		UE_LOG(LogCommonInputRerouting, Error, TEXT("Common UI Action Router subsystem is not available"));
 		return;
 	}
+
+	ActionRouter->bCenterCursor = bCenterCursor;
 
 	// Create the new desired UI Input Config
 	FUIInputConfig NewInputConfig;

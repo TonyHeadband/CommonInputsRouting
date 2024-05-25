@@ -36,4 +36,7 @@ protected:
 	 */
 	virtual void ApplyUIInputConfig(const FUIInputConfig& NewConfig, bool bForceRefresh) override;
 
+public:
+	UPROPERTY(BlueprintReadWrite, Category="CommonUI Input Switcher Options")
+	bool bCenterCursor = false;
 };

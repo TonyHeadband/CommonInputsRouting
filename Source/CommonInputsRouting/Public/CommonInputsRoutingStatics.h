@@ -40,5 +40,5 @@ public:
 	 * @param bIgnoreMoveInput Whether move input should now be ignored
 	 */
 	UFUNCTION(BlueprintCallable)
-	static void CommonSetInputMode(APlayerController* PlayerController, bool bMouseVisible, bool bIgnoreLookInput, bool bIgnoreMoveInput);
+	static void CommonSetInputMode(APlayerController* PlayerController, bool bCenterCursor, bool bMouseVisible, bool bIgnoreLookInput, bool bIgnoreMoveInput);
 };

@@ -1,4 +1,6 @@
 ﻿#include "CommonUIActionRouter.h"
+
+#include "Slate/SGameLayerManager.h"
 #include "Widgets/SViewport.h"
 
 
@@ -118,6 +120,20 @@ void UCommonUIActionRouter::ApplyUIInputConfig(const FUIInputConfig& NewConfig, 
 	else
 	{
 		SlateOperations.ReleaseMouseLock();
+	}
+
+	if (bCenterCursor)
+	{
+		TSharedPtr<FSlateUser> SlateUser = LocalPlayer.GetSlateUser();
+		TSharedPtr<IGameLayerManager> GameLayerManager = GameViewportClient->GetGameLayerManager();
+		if (ensure(SlateUser) && ensure(GameLayerManager))
+		{
+			FGeometry PlayerViewGeometry = GameLayerManager->GetPlayerWidgetHostGeometry(&LocalPlayer);
+			const FVector2D AbsoluteViewCenter = PlayerViewGeometry.GetAbsolutePositionAtCoordinates(FVector2D(0.5f, 0.5f));
+			SlateUser->SetCursorPosition(AbsoluteViewCenter);
+
+			UE_LOG(LogTemp, Verbose, TEXT("Capturing the cursor at the viewport center."));
+		}
 	}
 
 	// Capture or Uncapture the mouse
